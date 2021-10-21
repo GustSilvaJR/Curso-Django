@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import (BaseUserManager, AbstractUserManager, PermissionsMixin)
+from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, PermissionsMixin
 
 # Create your models here.
 
@@ -35,10 +35,10 @@ class UsuarioManager(BaseUserManager):
         usuario.save()
 
         return usuario
+        
 
 
-
-class Usuario(AbstractUserManager, PermissionsMixin):
+class Usuario(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(
         verbose_name="E-mail do usuário",
         max_length=194,
@@ -65,9 +65,10 @@ class Usuario(AbstractUserManager, PermissionsMixin):
     objects = UsuarioManager()
 
     class Meta:
-        verbose_name = "Usuário",
-        verbose_name_plural = "Usuários",
-        db_table = "usuario"
+        verbose_name = 'Usuário'
+        verbose_name_plural = 'Usuários'
+        db_table = 'usuario'
 
     def __str__ (self):
         return self.email    
+        

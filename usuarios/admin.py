@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Usuario
+from usuarios.models import Usuario
 
 
 # Register your models here.

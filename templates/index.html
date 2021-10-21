@@ -1,0 +1,143 @@
+{% extends "base.html" %} <!--Quando eu abrir esse arquivo eu vou puxar a base do dashboard do arquivo base.html e acrescentar esse bloco de conteudo no local designado no arquivo base(o mesmo acontece no outro arquivo)
+
+O NOME DOS BLOCOS SAO IGUAIS porque em uma aba vai estar rodando um ou outro serviço, nao os dois ao mesmo tempo, logo nao vao se sobrepor. vao aparecer somente na aba que foram requisitados e só quando receberem um request-->
+
+{% block conteudo %}
+<div id="content-wrapper" class="d-flex flex-column">
+    <div id="content">
+        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+            <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                <i class="fa fa-bars"></i>
+            </button>
+            
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown no-arrow">
+                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="mr-2 d-none d-lg-inline text-gray-800 small">
+                            <i class="fas fa-cog"></i>
+                        </span>
+                    </a>
+                    
+                    <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                            Sair
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="container-fluid">
+            <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                <h1 class="h3 mb-0 text-gray-800">{{apresentacao}}</h1>
+            </div>
+
+            <div class="row">
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left-warning shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Visitantes aguardando autorização</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">0</div>
+                                </div>
+                                
+                                <div class="col-auto">
+                                    <i class="fas fa-user-lock fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left-primary shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Visitantes no condomínio</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">0</div>
+                                </div>
+                                
+                                <div class="col-auto">
+                                    <i class="fas fa-user-clock fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left-success shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Visitas finalizadas</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">0</div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-user-check fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left-info shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Visitantes registrados no mês atual</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">0</div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-users fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 d-sm-flex align-items-center justify-content-between mb-4">
+                    <h6 class="m-0 font-weight-bold text-primary">Visitantes recentes</h6>
+                </div>
+
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <th>Nome completo</th>
+                                <th>CPF</th>
+                                <th>Horário de chegada</th>
+                                <th>Horário da autorização</th>
+                                <th>Autorizado por</th>
+                                <th>Mais informações</th>
+                            </thead>
+
+                            
+                            <tbody>
+                                {% for visitante in todos_visitantes %}
+                                    <tr>
+                                        <td>{{visitante.nome}}</td>
+                                        <td>{{visitante.cpf}}</td>
+                                        <td>{{visitante.horario_chegada}}</td>
+                                        <td>{{visitante.horario_autorizacao}}</td>
+                                        <td>{{visitante.morador_responsavel}}</td>
+                                        <td>
+                                            <a href="#">
+                                                Ver informações
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endblock conteudo %}
