@@ -1,6 +1,6 @@
 {% extends "base.html"%}
 
-{% load bootstrap %}
+{% load widget_tweaks %}
 
 {% block conteudo %}
 <div class="container">
@@ -14,7 +14,40 @@
                 Formulário para registro de novo visitante
             </h4>
             
-            {{form|bootstrap }}
+    {% if form.errors %}
+        <h1>VAI TOMAR NO CU MLK ENCAPETADO</h1>
+        {% for field in form %}
+            {% if field.errors %}
+                {% for erro in field.errors %}
+                    <div class="alert alert-warning" role="alert">
+                        {{erro}}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+
+
+            <form method="post">
+                <div class="form-row">
+                    {% csrf_token  %}
+                    
+                    {% for campo in form %}    
+        
+                        <div class="form-group col-md-12">
+                            <label> {{ campo.label }} {% if campo.label.required %} * {% endif %}  </label>                    
+                            {% render_field campo placeholder=campo.label  class="form-control" %}
+                            
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <div class="text-right">
+                    <button type="submit" class="btn btn-primary">
+                        <span class="text">Adicionar Visitante</span>
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
